@@ -2,12 +2,49 @@ package Operation.Tree;
 import BT.Construct.Node;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class OperationOnTree {
 
 	
-	public int countNoOfNode(Node node) {
+	
+	public int heightIterative(Node root) {
 		
+		Queue<Node> q = new LinkedList<Node>();
+		q.offer(root);
+		
+		int height = 0;
+		while(true) {
+			
+			int size = q.size();
+			
+			if(size == 0)
+				break;
+			
+			while(size > 0) {
+				
+				Node tmp = q.remove();
+				if(tmp.getLeft() !=null) 
+					q.add(tmp.getLeft());
+				if(tmp.getRight() !=null)
+					q.add(tmp.getRight());
+				size--;
+			}
+			height = height+1;
+		}
+		return height;
+	}
+	public int size(Node root) {
+/*------------------------------------------------------------	
+		//using ternary operator.
+		int leftCount = root.getLeft() == null ? 0:size(root.getLeft());
+		int rightCount= root.getRight() == null ? 0:size(root.getRight());
+		
+		return 1 + leftCount + rightCount;
+--------------------------------------------------------------		
+
+//recursive method
+		/*
 		if(node !=null) {
 			
 			int x = countNoOfNode(node.getLeft());
@@ -17,6 +54,25 @@ public class OperationOnTree {
 		}
 		
 		return 0;
+---------------------------------------------------------------
+*/
+		
+		//using non-recursive[count no of node we can use level order in this case]
+		
+		Queue<Node> q = new LinkedList<Node>();
+		q.offer(root);
+		int count = 0;
+		while(!q.isEmpty()) {
+			
+			Node tmp = q.poll();
+			count++;
+			if(tmp.getLeft() !=null) {
+				q.offer(tmp.getLeft());
+			}
+			if(tmp.getRight() !=null)
+				q.offer(tmp.getRight());
+		}
+		return count;
 	}
 	
 	public int zeroDegreeLeafNode(Node root) {
@@ -127,6 +183,35 @@ public class OperationOnTree {
 			}
 		}
 		return root;
+	}
+	
+	public void levelOrderTraverseReverse(Node root) {
+		
+		Stack<Node> s = new Stack<Node>();
+		Queue<Node> q = new LinkedList<>();
+		
+		q.offer(root);
+		
+		while(!q.isEmpty()) {
+			
+			Node tmp = q.poll();
+			if(tmp.getLeft() !=null) {
+				
+				q.offer(tmp.getLeft());
+			}
+			
+			if(tmp.getRight() !=null) {
+				
+				q.offer(tmp.getRight());
+			}
+			s.push(tmp);
+		}
+		
+		while(!s.isEmpty()) {
+			
+			System.out.print(s.pop().getData()+" ");
+		}
+
 	}
 
 }
