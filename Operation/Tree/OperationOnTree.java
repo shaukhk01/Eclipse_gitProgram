@@ -7,7 +7,37 @@ import java.util.Stack;
 public class OperationOnTree {
 
 	
-	
+	public int minHeight(Node root) {
+		
+		Queue<Node> q = new LinkedList<Node>();
+		q.offer(root);
+		int count = 0;
+		
+		while(!q.isEmpty()) {
+			
+			Node currentNode = q.poll();
+			
+			if(currentNode !=null) {
+			if(currentNode.getLeft() == null && currentNode.getRight() == null) {
+				
+					return count;
+			}
+			if(currentNode.getLeft() !=null)
+				q.offer(currentNode.getLeft());
+			if(currentNode.getRight() !=null)
+				q.offer(currentNode.getRight());
+		}else {
+			
+			if(!q.isEmpty()) {
+				
+				count++;
+				q.offer(null);
+			}
+		}
+	  }
+		return count;
+	}
+			
 	public int heightIterative(Node root) {
 		
 		Queue<Node> q = new LinkedList<Node>();
