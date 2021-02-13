@@ -3,10 +3,40 @@ import BT.Construct.Node;
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.TreeMap;
 
-public class OperationOnTree {
+public class OperationOnTree  {
 
 	
+	int height = 0;
+	public void topView(Node root) {
+		
+		TreeMap<Integer,Integer> m = new TreeMap<>();
+		Queue<Node> q = new LinkedList<>();
+		q.add(root);
+		
+		while(!q.isEmpty()) {
+			
+			Node tmp = q.remove();
+			int hd = tmp.height;
+			
+			if(m.get(hd) == null) {
+				
+				m.put(hd, tmp.getData());
+			}
+			if(tmp.getLeft() !=null) {
+				
+				tmp.getLeft().height = hd-1;
+				q.add(tmp.getLeft());
+			}
+			if(tmp.getRight() !=null) {
+				
+				tmp.getRight().height = hd+1;
+				q.add(tmp.getRight());
+			}
+		}
+		System.out.println(m.values());
+	}
 	public int minHeight(Node root) {
 		
 		Queue<Node> q = new LinkedList<Node>();
